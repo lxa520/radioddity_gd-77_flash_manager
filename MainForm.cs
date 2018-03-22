@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel.Design;
+using System.IO;
 
 namespace GD77_FlashManager
 {
@@ -53,13 +54,38 @@ namespace GD77_FlashManager
 
 		private void btnOpen_Click(object sender, EventArgs e)
 		{
+			OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
+			//openFileDialog1.InitialDirectory = "c:\\";
+			openFileDialog1.Filter = "binary files (*.bin)|*.bin|All files (*.*)|*.*";
+			openFileDialog1.RestoreDirectory = true;
+
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				try
+				{
+					MainForm.eeprom = File.ReadAllBytes(openFileDialog1.FileName);
+					_bv.SetBytes(MainForm.eeprom);
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+				}
+			}
+			
 		}
 
 		private void btnSave_Click(object sender, EventArgs e)
 		{
+			SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
+			saveFileDialog1.Filter = "binary files (*.bin)|*.bin|All files (*.*)|*.*";
+			saveFileDialog1.RestoreDirectory = true;
+
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				File.WriteAllBytes(saveFileDialog1.FileName, MainForm.eeprom);
+			}
 		}
-
 	}
 }
