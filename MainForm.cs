@@ -28,7 +28,7 @@ namespace GD77_FlashManager
 			_bv.Location = grpHexView.Location;// new Point(200, 20);
 			_bv.SetBytes(eeprom); // or SetBytes
 			this.Controls.Add(_bv);
-			Console.WriteLine();
+			
 		}
 
 		private void btnRead_Click(object sender, EventArgs e)
@@ -62,15 +62,41 @@ namespace GD77_FlashManager
 			}
 
 			commPrgForm.ShowDialog();
+			_bv.SetStartLine(MainForm.startAddress/16);
 			_bv.Refresh();
 
 		}
 
 		private void btnWrite_Click(object sender, EventArgs e)
 		{
+			int correction = 0;
 			CommPrgForm commPrgForm = new CommPrgForm();
 			commPrgForm.StartPosition = FormStartPosition.CenterParent;
 			commPrgForm.IsRead = false;
+
+			MainForm.startAddress = int.Parse(txtStartAddr.Text, System.Globalization.NumberStyles.HexNumber);
+			correction = MainForm.startAddress % 32;
+			if (correction != 0)
+			{
+				MainForm.startAddress = (MainForm.startAddress / 32) * 32;
+				txtStartAddr.Text = MainForm.startAddress.ToString("X");
+				int trLen = correction + int.Parse(txtLen.Text, System.Globalization.NumberStyles.HexNumber);
+				if (trLen % 32 != 0)
+				{
+					trLen = (trLen / 32) * 32 + 32;
+				}
+				txtLen.Text = trLen.ToString("X");
+				MessageBox.Show("Read and Write addresses must be a multiple of 32. The address and potentially the length has been changed");
+			}
+
+			MainForm.transferLength = int.Parse(txtLen.Text, System.Globalization.NumberStyles.HexNumber);
+			correction = MainForm.transferLength % 32;
+			if (correction != 0)
+			{
+				MainForm.transferLength = (MainForm.transferLength / 32) * 32 + 32;
+				txtLen.Text = MainForm.transferLength.ToString("X");
+				MessageBox.Show("Transfer length must be a multiple of 32. The length has been increased to a multiple of 32");
+			}
 
 			commPrgForm.ShowDialog();
 		}

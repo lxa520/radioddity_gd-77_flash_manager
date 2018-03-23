@@ -192,15 +192,9 @@ internal class CodeplugComms
 								{
 									goto end_IL_02a2;
 								}
-								byte[] outBuf = new byte[blockLength];
-								if (false)
-								{
-									Buffer.BlockCopy(usbBuf, 0, outBuf, 0, blockLength);// Extract the first 8 bytes from the response
-								}
-								else
-								{
-									Buffer.BlockCopy(usbBuf, 4, MainForm.eeprom, (block * blockLength), blockLength);// Extract the first 8 bytes from the response
-								}
+
+								Buffer.BlockCopy(usbBuf, 4, MainForm.eeprom, (block * blockLength), blockLength);// Extract the first 8 bytes from the response
+
 								if (this.OnFirmwareUpdateProgress != null)
 								{
 									this.OnFirmwareUpdateProgress(this, new FirmwareUpdateProgressEventArgs((float)(block+1-startBlock) *100 / (float)numBlocks, "", false, false));
@@ -209,8 +203,6 @@ internal class CodeplugComms
 							// SEND END OF READ
 							specifiedDevice.SendData(CodeplugComms.CMD_ENDR);
 							specifiedDevice.ReceiveData(usbBuf);
-
-							//System.IO.File.WriteAllBytes("d:\\gd-77-factor_settings.bin", MainForm.eeprom);
 						}
 						break;
 					}
@@ -266,44 +258,40 @@ internal class CodeplugComms
 			}
 			else
 			{
-				MainForm.eeprom = System.IO.File.ReadAllBytes(Application.StartupPath + "\\factory_settings.dat");
-				if (MainForm.eeprom.Length != 1024*1024)
-				{
-					this.OnFirmwareUpdateProgress(this, new FirmwareUpdateProgressEventArgs(0f, "ERROR. Invalid default settings file", false, false));
-					return;
-				}
-				//System.IO.File.WriteAllBytes(Application.StartupPath+"factory_settings.dat", MainForm.eeprom);
 				while (true)
 				{
 					Array.Clear(usbBuf, 0, usbBuf.Length);
 					specifiedDevice.SendData(CodeplugComms.CMD_PRG);// Send PROGRA command to initiate comms
+					//Console.WriteLine("Send PRG1");
 					specifiedDevice.ReceiveData(usbBuf);// Wait for response
 					if (usbBuf[0] != CodeplugComms.CMD_ACK[0])
 					{
 						break;// Exit if not ack
 					}
 					specifiedDevice.SendData(CodeplugComms.CMD_PRG2);// Send second half of comms init sequence
+					//Console.WriteLine("Send PRG2");
 					Array.Clear(usbBuf, 0, usbBuf.Length);
 					specifiedDevice.ReceiveData(usbBuf);// GD77 send back device information
 					byte[] array3 = new byte[8];
 					Buffer.BlockCopy(usbBuf, 0, array3, 0, 8);// Extract the first 8 bytes from the response
-					// REMOVED CURRENT MODEL CHECK !!!  if (array3.smethod_4(Settings.CUR_MODEL))
 					{
 						// its the correct model number
 						specifiedDevice.SendData(CodeplugComms.CMD_ACK);// send ACK
 						Array.Clear(usbBuf, 0, usbBuf.Length);
 						specifiedDevice.ReceiveData(usbBuf);// Wait for response (of ACK)
 
-
 						if (usbBuf[0] == CodeplugComms.CMD_ACK[0])
 						{
+							//Console.WriteLine("Got ACK");
 							// --------------- removed the password checking
 							blockLength = 32;// Max transfer length is 32 bytes
 							int currentPage = 0;
 							int bankSize = 65536;
-							int numBlocks = MainForm.eeprom.Length / blockLength;
-							for (int block = 0; block < numBlocks; block++)
+							int numBlocks = MainForm.transferLength / blockLength;
+							int startBlock = MainForm.startAddress / blockLength;
+							for (int block = startBlock; block < (startBlock + numBlocks); block++)
 							{
+								//Console.Write("Processing block " + block + " end block " + (startBlock + numBlocks));
 								if (currentPage != (block * blockLength) / bankSize)
 								{
 									currentPage = (block * blockLength) / bankSize;
@@ -314,7 +302,7 @@ internal class CodeplugComms
 									array4[5] = (byte)(pageAddr >> 16);
 									array4[6] = (byte)(pageAddr >> 8);
 									array4[7] = (byte)pageAddr;
-									Console.WriteLine(SpecifiedDevice.ByteArrayToString(array4));
+									//Console.WriteLine("Send address changed to 0x" + pageAddr.ToString("X"));
 									Array.Clear(usbBuf, 0, usbBuf.Length);
 									specifiedDevice.SendData(array4, 0, array4.Length);
 									specifiedDevice.ReceiveData(usbBuf);
@@ -331,24 +319,17 @@ internal class CodeplugComms
 
 								Array.Clear(usbBuf, 0, usbBuf.Length);
 								Buffer.BlockCopy(MainForm.eeprom, (block * blockLength), data2, 4, blockLength);
-								specifiedDevice.SendData(data2, 0, 4);
-								if (!specifiedDevice.ReceiveData(usbBuf))
+								specifiedDevice.SendData(data2, 0, 4+32);
+								//Console.WriteLine("Send Data to address 0x"+addr16.ToString("X"));
+
+								specifiedDevice.ReceiveData(usbBuf);
+								if (usbBuf[0] != CodeplugComms.CMD_ACK[0])
 								{
 									goto end_IL_02a2;
 								}
-								byte[] outBuf = new byte[blockLength];
-								if (false)
-								{
-									Buffer.BlockCopy(usbBuf, 0, outBuf, 0, blockLength);// Extract the first 8 bytes from the response
-									Console.WriteLine(SpecifiedDevice.ByteArrayToString(outBuf));
-								}
-								else
-								{
-									Buffer.BlockCopy(usbBuf, 4, MainForm.eeprom, (block * blockLength), blockLength);// Extract the first 8 bytes from the response
-								}
 								if (this.OnFirmwareUpdateProgress != null)
 								{
-									this.OnFirmwareUpdateProgress(this, new FirmwareUpdateProgressEventArgs((float)(block + 1) * 100 / (float)numBlocks, "", false, false));
+									this.OnFirmwareUpdateProgress(this, new FirmwareUpdateProgressEventArgs((float)(block + 1 - startBlock) * 100 / (float)numBlocks, "", false, false));
 								}
 							}
 							// SEND END OF WRITE
@@ -359,9 +340,11 @@ internal class CodeplugComms
 					}
 					return;
 				end_IL_02a2:
+					// SEND END OF WRITE
+					specifiedDevice.SendData(CodeplugComms.CMD_ENDW);
+					specifiedDevice.ReceiveData(usbBuf);
 					break;
 				}
-
 			}
 		}
 		catch (TimeoutException ex)

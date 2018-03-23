@@ -193,40 +193,43 @@ namespace GD77_FlashManager
 			{
 				base.BeginInvoke(new EventHandler<FirmwareUpdateProgressEventArgs>(this.method_0), sender, e);
 			}
-			else if (e.Failed)
-			{
-				if (!string.IsNullOrEmpty(e.Message))
-				{
-					MessageBox.Show(e.Message, "");
-				}
-				base.Close();
-			}
-			else if (e.Closed)
-			{
-			}
 			else
 			{
-				this.prgComm.Value = (int)e.Percentage;
-	            if (e.Percentage == (float)this.prgComm.Maximum)
-                {
-                    this.IsSucess = true;
-                    
-                    
-					if (this.IsRead)
+				if (e.Failed)
+				{
+					if (!string.IsNullOrEmpty(e.Message))
 					{
-                        this.lblPrompt.Text = "ReadComplete";
+						MessageBox.Show(e.Message, "");
 					}
-					else
+					base.Close();
+				}
+				else
+				{
+					if (!e.Closed)
 					{
-                        this.lblPrompt.Text = "WriteComplete";
+						this.prgComm.Value = (int)e.Percentage;
+						if (e.Percentage == (float)this.prgComm.Maximum)
+						{
+							this.IsSucess = true;
+
+
+							if (this.IsRead)
+							{
+								this.lblPrompt.Text = "Read Complete";
+							}
+							else
+							{
+								this.lblPrompt.Text = "Write Complete";
+							}
+							this.btnOK.Visible = true;
+							this.btnCancel.Visible = false;
+						}
+						else
+						{
+							this.lblPrompt.Text = string.Format("{0}%", this.prgComm.Value);
+						}
 					}
-                    this.btnOK.Visible = true;
-                    this.btnCancel.Visible = false;    
-                }
-                else
-                {
-                    this.lblPrompt.Text = string.Format("{0}%", this.prgComm.Value);
-                }
+				}
 			}
 		}
 	}
