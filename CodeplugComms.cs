@@ -40,13 +40,13 @@ internal class CodeplugComms
 
     bool _CancelComm;
 	[CompilerGenerated]
-	public bool method_0()
+	public bool getCancelComm()
 	{
 		return this._CancelComm;
 	}
 
 	[CompilerGenerated]
-	public void method_1(bool bool_0)
+	public void setCancelComm(bool bool_0)
 	{
 		this._CancelComm = bool_0;
 	}
@@ -54,18 +54,18 @@ internal class CodeplugComms
     bool _IsRead;
 
 	[CompilerGenerated]
-	public bool getIsRead()
+	public bool setIsRead()
 	{
 		return this._IsRead;
 	}
 
 	[CompilerGenerated]
-	public void method_3(bool bool_0)
+	public void setIsRead(bool bool_0)
 	{
 		this._IsRead = bool_0;
 	}
 
-	public bool method_4()
+	public bool isThreadAlive()
 	{
 		if (this.thread != null)
 		{
@@ -74,9 +74,9 @@ internal class CodeplugComms
 		return false;
 	}
 
-	public void method_5()
+	public void joinThreadIfAlive()
 	{
-		if (this.method_4())
+		if (this.isThreadAlive())
 		{
 			this.thread.Join();
 		}
@@ -84,7 +84,7 @@ internal class CodeplugComms
 
 	public void startCodeplugReadOrWriteInNewThread()
 	{
-		if (this.getIsRead())
+		if (this.setIsRead())
 		{
 			this.thread = new Thread(this.readData);
 		}
@@ -196,7 +196,6 @@ internal class CodeplugComms
 								if (false)
 								{
 									Buffer.BlockCopy(usbBuf, 0, outBuf, 0, blockLength);// Extract the first 8 bytes from the response
-									Console.WriteLine(SpecifiedDevice.ByteArrayToString(outBuf));
 								}
 								else
 								{

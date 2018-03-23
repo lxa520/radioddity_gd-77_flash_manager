@@ -34,10 +34,9 @@
 			this.txtStartAddr = new System.Windows.Forms.TextBox();
 			this.txtLen = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.txtEndAddr = new System.Windows.Forms.TextBox();
 			this.btnRead = new System.Windows.Forms.Button();
 			this.btnWrite = new System.Windows.Forms.Button();
+			this.grpHexView = new System.Windows.Forms.GroupBox();
 			this.SuspendLayout();
 			// 
 			// btnOpen
@@ -71,18 +70,18 @@
 			// 
 			// txtStartAddr
 			// 
-			this.txtStartAddr.Location = new System.Drawing.Point(9, 102);
+			this.txtStartAddr.Location = new System.Drawing.Point(21, 102);
 			this.txtStartAddr.Name = "txtStartAddr";
-			this.txtStartAddr.Size = new System.Drawing.Size(100, 20);
+			this.txtStartAddr.Size = new System.Drawing.Size(75, 20);
 			this.txtStartAddr.TabIndex = 3;
 			this.txtStartAddr.Text = "0";
 			this.txtStartAddr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// txtLen
 			// 
-			this.txtLen.Location = new System.Drawing.Point(9, 151);
+			this.txtLen.Location = new System.Drawing.Point(21, 151);
 			this.txtLen.Name = "txtLen";
-			this.txtLen.Size = new System.Drawing.Size(100, 20);
+			this.txtLen.Size = new System.Drawing.Size(75, 20);
 			this.txtLen.TabIndex = 5;
 			this.txtLen.Text = "0";
 			this.txtLen.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -96,27 +95,9 @@
 			this.label2.TabIndex = 4;
 			this.label2.Text = "Length (hex)";
 			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(9, 191);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(92, 13);
-			this.label3.TabIndex = 4;
-			this.label3.Text = "End address (hex)";
-			// 
-			// txtEndAddr
-			// 
-			this.txtEndAddr.Location = new System.Drawing.Point(9, 207);
-			this.txtEndAddr.Name = "txtEndAddr";
-			this.txtEndAddr.Size = new System.Drawing.Size(100, 20);
-			this.txtEndAddr.TabIndex = 5;
-			this.txtEndAddr.Text = "0";
-			this.txtEndAddr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
 			// btnRead
 			// 
-			this.btnRead.Location = new System.Drawing.Point(21, 242);
+			this.btnRead.Location = new System.Drawing.Point(21, 186);
 			this.btnRead.Name = "btnRead";
 			this.btnRead.Size = new System.Drawing.Size(75, 23);
 			this.btnRead.TabIndex = 0;
@@ -126,7 +107,7 @@
 			// 
 			// btnWrite
 			// 
-			this.btnWrite.Location = new System.Drawing.Point(21, 271);
+			this.btnWrite.Location = new System.Drawing.Point(21, 215);
 			this.btnWrite.Name = "btnWrite";
 			this.btnWrite.Size = new System.Drawing.Size(75, 23);
 			this.btnWrite.TabIndex = 0;
@@ -134,13 +115,21 @@
 			this.btnWrite.UseVisualStyleBackColor = true;
 			this.btnWrite.Click += new System.EventHandler(this.btnWrite_Click);
 			// 
+			// grpHexView
+			// 
+			this.grpHexView.Location = new System.Drawing.Point(127, 13);
+			this.grpHexView.Name = "grpHexView";
+			this.grpHexView.Size = new System.Drawing.Size(564, 569);
+			this.grpHexView.TabIndex = 6;
+			this.grpHexView.TabStop = false;
+			this.grpHexView.Text = "Hex View is placed here";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(944, 633);
-			this.Controls.Add(this.txtEndAddr);
-			this.Controls.Add(this.label3);
+			this.Controls.Add(this.grpHexView);
 			this.Controls.Add(this.txtLen);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.txtStartAddr);
@@ -164,10 +153,9 @@
 		private System.Windows.Forms.TextBox txtStartAddr;
 		private System.Windows.Forms.TextBox txtLen;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox txtEndAddr;
 		private System.Windows.Forms.Button btnRead;
 		private System.Windows.Forms.Button btnWrite;
+		private System.Windows.Forms.GroupBox grpHexView;
 	}
 }
 

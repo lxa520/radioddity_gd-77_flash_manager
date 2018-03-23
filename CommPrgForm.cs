@@ -28,23 +28,7 @@ namespace GD77_FlashManager
 			set;
 		}
 
-		public int startAddress
-		{
-			get;
-			set;
-		}
 
-		public int transferLength
-		{
-			get;
-			set;
-		}
-
-		public int endAddress
-		{
-			get;
-			set;
-		}
 
 		protected override void Dispose(bool disposing)
 		{
@@ -132,7 +116,7 @@ namespace GD77_FlashManager
 			{
 				this.Text = "Write";
 			}
-			this.hidComm.method_3(this.IsRead);
+			this.hidComm.setIsRead(this.IsRead);
 			if (this.IsRead)
 			{
 				this.hidComm.START_ADDR = new int[7]
@@ -185,10 +169,10 @@ namespace GD77_FlashManager
 
 		private void CommPrgForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (this.hidComm.method_4())
+			if (this.hidComm.isThreadAlive())
 			{
-				this.hidComm.method_1(true);
-				this.hidComm.method_5();
+				this.hidComm.setCancelComm(true);
+				this.hidComm.joinThreadIfAlive();
 			}
 		}
 
