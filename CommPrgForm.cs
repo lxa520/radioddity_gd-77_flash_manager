@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+
 namespace GD77_FlashManager
 {
 	public class CommPrgForm : Form
@@ -14,6 +15,7 @@ namespace GD77_FlashManager
         private Button btnOK;
 		private FirmwareUpdate firmwareUpdate;
 		private CodeplugComms hidComm;
+
 
 
 		public bool IsRead

@@ -1,4 +1,5 @@
-﻿namespace GD77_FlashManager
+﻿using System.ComponentModel.Design;
+namespace GD77_FlashManager
 {
 	partial class MainForm
 	{
@@ -28,6 +29,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.hexBox = new Be.Windows.Forms.HexBox();
 			this.btnOpen = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
@@ -36,8 +38,20 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.btnRead = new System.Windows.Forms.Button();
 			this.btnWrite = new System.Windows.Forms.Button();
-			this.grpHexView = new System.Windows.Forms.GroupBox();
 			this.SuspendLayout();
+			// 
+			// hexBox
+			// 
+			this.hexBox.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.hexBox.LineInfoVisible = true;
+			this.hexBox.Location = new System.Drawing.Point(110, 22);
+			this.hexBox.Name = "hexBox";
+			this.hexBox.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
+			this.hexBox.Size = new System.Drawing.Size(624, 444);
+			this.hexBox.StringViewVisible = true;
+			this.hexBox.TabIndex = 0;
+			this.hexBox.UseFixedBytesPerLine = true;
+			this.hexBox.VScrollBarVisible = true;
 			// 
 			// btnOpen
 			// 
@@ -115,21 +129,11 @@
 			this.btnWrite.UseVisualStyleBackColor = true;
 			this.btnWrite.Click += new System.EventHandler(this.btnWrite_Click);
 			// 
-			// grpHexView
-			// 
-			this.grpHexView.Location = new System.Drawing.Point(127, 13);
-			this.grpHexView.Name = "grpHexView";
-			this.grpHexView.Size = new System.Drawing.Size(564, 569);
-			this.grpHexView.TabIndex = 6;
-			this.grpHexView.TabStop = false;
-			this.grpHexView.Text = "Hex View is placed here";
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(944, 633);
-			this.Controls.Add(this.grpHexView);
 			this.Controls.Add(this.txtLen);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.txtStartAddr);
@@ -138,8 +142,10 @@
 			this.Controls.Add(this.btnRead);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.btnOpen);
+			this.Controls.Add(this.hexBox);
 			this.Name = "MainForm";
 			this.Text = "GD-77 Flash manager";
+			this.Load += new System.EventHandler(this.Form1_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -147,6 +153,8 @@
 
 		#endregion
 
+		private Be.Windows.Forms.HexBox hexBox;
+//		private ByteViewer _bv;
 		private System.Windows.Forms.Button btnOpen;
 		private System.Windows.Forms.Button btnSave;
 		private System.Windows.Forms.Label label1;
@@ -155,7 +163,7 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Button btnRead;
 		private System.Windows.Forms.Button btnWrite;
-		private System.Windows.Forms.GroupBox grpHexView;
+
 	}
 }
 
