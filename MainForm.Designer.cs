@@ -47,7 +47,7 @@ namespace GD77_FlashManager
 			this.hexBox.Location = new System.Drawing.Point(110, 22);
 			this.hexBox.Name = "hexBox";
 			this.hexBox.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-			this.hexBox.Size = new System.Drawing.Size(624, 444);
+			this.hexBox.Size = new System.Drawing.Size(669, 599);
 			this.hexBox.StringViewVisible = true;
 			this.hexBox.TabIndex = 0;
 			this.hexBox.UseFixedBytesPerLine = true;
@@ -97,7 +97,7 @@ namespace GD77_FlashManager
 			this.txtLen.Name = "txtLen";
 			this.txtLen.Size = new System.Drawing.Size(75, 20);
 			this.txtLen.TabIndex = 5;
-			this.txtLen.Text = "0";
+			this.txtLen.Text = "20";
 			this.txtLen.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label2
@@ -133,7 +133,7 @@ namespace GD77_FlashManager
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(944, 633);
+			this.ClientSize = new System.Drawing.Size(797, 633);
 			this.Controls.Add(this.txtLen);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.txtStartAddr);

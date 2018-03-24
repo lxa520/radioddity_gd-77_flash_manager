@@ -39,61 +39,67 @@ namespace GD77_FlashManager
 
 		private void InitializeComponent()
 		{
-			this.lblPrompt = new Label();
-			this.prgComm = new ProgressBar();
-			this.btnCancel = new Button();
-            this.btnOK = new Button();
-			base.SuspendLayout();
-			this.lblPrompt.BorderStyle = BorderStyle.Fixed3D;
-			this.lblPrompt.Location = new Point(43, 118);
+			this.lblPrompt = new System.Windows.Forms.Label();
+			this.prgComm = new System.Windows.Forms.ProgressBar();
+			this.btnCancel = new System.Windows.Forms.Button();
+			this.btnOK = new System.Windows.Forms.Button();
+			this.SuspendLayout();
+			// 
+			// lblPrompt
+			// 
+			this.lblPrompt.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.lblPrompt.Location = new System.Drawing.Point(26, 37);
 			this.lblPrompt.Name = "lblPrompt";
-			this.lblPrompt.Size = new Size(380, 26);
+			this.lblPrompt.Size = new System.Drawing.Size(380, 26);
 			this.lblPrompt.TabIndex = 0;
-            this.lblPrompt.TextAlign = ContentAlignment.MiddleCenter;
-            //this.lblPrompt.Text = "";// Percentage display goes here
-
-
-			this.prgComm.Location = new Point(43, 70);
-			this.prgComm.Margin = new Padding(3, 4, 3, 4);
+			this.lblPrompt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// prgComm
+			// 
+			this.prgComm.Location = new System.Drawing.Point(26, 13);
+			this.prgComm.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.prgComm.Name = "prgComm";
-			this.prgComm.Size = new Size(380, 31);
+			this.prgComm.Size = new System.Drawing.Size(380, 15);
 			this.prgComm.TabIndex = 1;
-
-			this.btnCancel.Location = new Point(184, 161);
-			this.btnCancel.Margin = new Padding(3, 4, 3, 4);
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Location = new System.Drawing.Point(167, 80);
+			this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new Size(87, 31);
+			this.btnCancel.Size = new System.Drawing.Size(87, 31);
 			this.btnCancel.TabIndex = 2;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
-			this.btnCancel.Click += this.btnCancel_Click;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			// 
+			// btnOK
+			// 
+			this.btnOK.Location = new System.Drawing.Point(319, 80);
+			this.btnOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.btnOK.Name = "btnOK";
+			this.btnOK.Size = new System.Drawing.Size(87, 31);
+			this.btnOK.TabIndex = 3;
+			this.btnOK.Text = "OK";
+			this.btnOK.UseVisualStyleBackColor = true;
+			this.btnOK.Visible = false;
+			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+			// 
+			// CommPrgForm
+			// 
+			this.ClientSize = new System.Drawing.Size(424, 122);
+			this.Controls.Add(this.btnCancel);
+			this.Controls.Add(this.btnOK);
+			this.Controls.Add(this.prgComm);
+			this.Controls.Add(this.lblPrompt);
+			this.Font = new System.Drawing.Font("Arial", 10F);
+			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.Name = "CommPrgForm";
+			this.ShowInTaskbar = false;
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommPrgForm_FormClosing);
+			this.Load += new System.EventHandler(this.CommPrgForm_Load);
+			this.ResumeLayout(false);
 
-            this.btnOK.Location = new Point(336, 161);
-            this.btnOK.Margin = new Padding(3, 4, 3, 4);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new Size(87, 31);
-            this.btnOK.TabIndex = 3;
-            this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += this.btnOK_Click;
-            this.btnOK.Visible = false;
-
-
-			base.AutoScaleDimensions = new SizeF(7f, 16f);
-//			base.AutoScaleMode = AutoScaleMode.Font;
-			base.ClientSize = new Size(468, 214);
-			base.Controls.Add(this.btnCancel);
-            base.Controls.Add(this.btnOK);
-			base.Controls.Add(this.prgComm);
-			base.Controls.Add(this.lblPrompt);
-			this.Font = new Font("Arial", 10f, FontStyle.Regular);
-			base.FormBorderStyle = FormBorderStyle.FixedDialog;
-			base.Margin = new Padding(3, 4, 3, 4);
-			base.Name = "CommPrgForm";
-			base.ShowInTaskbar = false;
-			base.Load += this.CommPrgForm_Load;
-			base.FormClosing += this.CommPrgForm_FormClosing;
-			base.ResumeLayout(false);
 		}
 
 		public CommPrgForm()

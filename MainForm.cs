@@ -18,14 +18,14 @@ namespace GD77_FlashManager
 		public static byte [] eeprom = new byte[1024 * 1024];
 		public static int startAddress;
 		public static int transferLength;
-		private DynamicByteProvider _dbp;
+		private FixedByteProvider _dbp;
 		private bool _hexboxHasChanged = false;
 		
 
 		public MainForm()
 		{
 			InitializeComponent();
-			hexBox.ByteProvider = _dbp = new DynamicByteProvider(eeprom);
+			hexBox.ByteProvider = _dbp = new FixedByteProvider(eeprom);
 			
 			_dbp.Changed += new EventHandler(onDataProviderChanged);// No point doing something every time this changes, as it only alerts to the fact that something has changed and not what specific byte has changed
 		}
@@ -65,7 +65,7 @@ namespace GD77_FlashManager
 				return;
 			}
 			commPrgForm.ShowDialog();
-			hexBox.ByteProvider = _dbp = new DynamicByteProvider(eeprom);
+			hexBox.ByteProvider = _dbp = new FixedByteProvider(eeprom);
 			_hexboxHasChanged = false;
 		}
 
@@ -110,7 +110,7 @@ namespace GD77_FlashManager
 				try
 				{
 					MainForm.eeprom = File.ReadAllBytes(openFileDialog1.FileName);
-					hexBox.ByteProvider = _dbp = new DynamicByteProvider(eeprom);
+					hexBox.ByteProvider = _dbp = new FixedByteProvider(eeprom);
 					_hexboxHasChanged = false;
 				}
 				catch (Exception ex)
